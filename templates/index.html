@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="home-container">
+        <h1>Welcome to Text Tools</h1>
+        <p>Choose from the tools below to analyze or manipulate your text easily.</p>
+
+        <div class="tools">
+            <div class="tool-card word-counter">
+                <a href="/word-counter">
+                    <h2>Word Counter</h2>
+                    <p>Count words, characters, and get the reading time.</p>
+                </a>
+            </div>
+
+            <div class="tool-card keyword-density">
+                <a href="/keyword-density">
+                    <h2>Keyword Density</h2>
+                    <p>Calculate the density of a keyword in your text.</p>
+                </a>
+            </div>
+
+            <div class="tool-card sentence-case">
+                <a href="/sentence-case">
+                    <h2>Sentence Case Converter</h2>
+                    <p>Convert your text to proper sentence case.</p>
+                </a>
+            </div>
+
+            <div class="tool-card paragraph-counter">
+                <a href="/paragraph-counter">
+                    <h2>Paragraph Counter</h2>
+                    <p>Count the number of paragraphs in your text.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

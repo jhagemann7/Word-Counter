@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Case Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sentence Case Converter Tool</h1>
+
+        <form method="POST">
+            <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
+            <button type="submit">Convert to Sentence Case</button>
+        </form>
+
+        {% if sentence_case %}
+        <div class="tool-result">
+            <h2>Converted Text:</h2>
+            <p>{{ sentence_case }}</p>
+        </div>
+        {% endif %}
+
+        <a href="/" class="return-home">Return to Home</a>
+    </div>
+</body>
+</html>
