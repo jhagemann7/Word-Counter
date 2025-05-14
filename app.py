@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import re
 
 app = Flask(__name__)
@@ -57,18 +57,18 @@ def word_counter():
     return render_template("word_counter.html", text=text, word_count=word_count, char_count=char_count, reading_time=reading_time)
 
 # Keyword density calculator route
-@app.route('/keyword-density', methods=['GET', 'POST'])
+@app.route("/keyword-density", methods=["GET", "POST"])
 def keyword_density():
-    text = ''
-    keyword = ''
+    text = ""
+    keyword = ""
     keyword_density_result = None
 
-    if request.method == 'POST':
-        text = request.form['text']
-        keyword = request.form['keyword']
+    if request.method == "POST":
+        text = request.form["text"]
+        keyword = request.form["keyword"]
 
         if text and keyword:
-            clean_text = re.sub(r'[^\w\s]', '', text.lower())
+            clean_text = re.sub(r"[^\w\s]", "", text.lower())
             clean_keyword = keyword.lower()
 
             word_count = clean_text.split().count(clean_keyword)
@@ -77,20 +77,20 @@ def keyword_density():
             if total_words > 0:
                 keyword_density_result = round((word_count / total_words) * 100, 1)
 
-    return render_template('keyword_density.html', text=text, keyword=keyword, keyword_density=keyword_density_result)
+    return render_template("keyword_density.html", text=text, keyword=keyword, keyword_density=keyword_density_result)
 
 # Sentence case converter route
-@app.route('/sentence-case', methods=['GET', 'POST'])
+@app.route("/sentence-case", methods=["GET", "POST"])
 def sentence_case():
-    text = ''
-    sentence_case_result = ''
+    text = ""
+    sentence_case_result = ""
 
-    if request.method == 'POST':
-        text = request.form['text']
+    if request.method == "POST":
+        text = request.form["text"]
         if text:
             sentence_case_result = to_sentence_case(text)
 
-    return render_template('sentence_case.html', text=text, sentence_case=sentence_case_result)
+    return render_template("sentence_case.html", text=text, sentence_case=sentence_case_result)
 
 # Paragraph counter route
 @app.route("/paragraph-counter", methods=["GET", "POST"])
@@ -105,6 +105,12 @@ def paragraph_counter():
 
     return render_template("paragraph_counter.html", text=text, paragraph_count=paragraph_count)
 
+# Sitemap route
+@app.route("/sitemap.xml")
+def sitemap():
+    return send_from_directory(app.static_folder, "sitemap.xml")
+
 # Run the app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
