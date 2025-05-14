@@ -110,6 +110,13 @@ def paragraph_counter():
 def sitemap():
     return send_from_directory(app.static_folder, "sitemap.xml")
 
+from flask import send_from_directory
+
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(app.static_folder, "robots.txt")
+
+
 # Run the app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
