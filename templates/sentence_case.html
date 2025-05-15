@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentence Case Converter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentence Case Converter | Format Your Text Properly</title>
+    <meta name="description" content="Convert your text to proper sentence case with our free online tool. Format paragraphs and sentences easily." />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    
+    <link rel="canonical" href="https://www.text-tool-kit.com/sentence-case" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sentence Case Converter | Format Your Text Properly" />
+    <meta property="og:description" content="Convert your text to proper sentence case with our free online tool. Format paragraphs and sentences easily." />
+    <meta property="og:url" content="https://www.text-tool-kit.com/sentence-case" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sentence Case Converter",
+      "url": "https://www.text-tool-kit.com/sentence-case",
+      "description": "Free online sentence case converter tool to format text properly with correct capitalization.",
+      "applicationCategory": "Utility",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "Text Tool Kit"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Sentence Case Converter Tool</h1>
+        <h1>Sentence Case Converter</h1>
 
         <form method="POST">
             <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
-            <button type="submit">Convert to Sentence Case</button>
+            <button type="submit">Convert Text</button>
         </form>
 
-        {% if sentence_case %}
+        {% if converted_text %}
         <div class="tool-result">
             <h2>Converted Text:</h2>
-            <p>{{ sentence_case }}</p>
+            <textarea readonly rows="10">{{ converted_text }}</textarea>
         </div>
         {% endif %}
 
         <a href="/" class="return-home">Return to Home</a>
+         <p class="tool-description">
+            Use this tool to convert your text into proper sentence case, ensuring the first letter of each sentence is capitalized for better readability.
+        </p>
     </div>
 </body>
 </html>

@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keyword Density</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Keyword Density Checker | Optimize Your Content</title>
+    <meta name="description" content="Check the keyword density of your text with our free online tool. Improve SEO by analyzing how often keywords appear in your content." />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    
+    <link rel="canonical" href="https://www.text-tool-kit.com/keyword-density" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free Keyword Density Checker | Optimize Your Content" />
+    <meta property="og:description" content="Check the keyword density of your text with our free online tool. Improve SEO by analyzing how often keywords appear in your content." />
+    <meta property="og:url" content="https://www.text-tool-kit.com/keyword-density" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Keyword Density Checker",
+      "url": "https://www.text-tool-kit.com/keyword-density",
+      "description": "Free online keyword density checker tool to analyze keyword frequency and optimize content for SEO.",
+      "applicationCategory": "Utility",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "Text Tool Kit"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -24,6 +52,9 @@
         {% endif %}
 
         <a href="/" class="return-home">Return to Home</a>
+        <p class="tool-description">
+            Use this keyword density checker to analyze how frequently a keyword appears in your text, helping you improve your SEO and content targeting.
+        </p>
     </div>
 </body>
 </html>

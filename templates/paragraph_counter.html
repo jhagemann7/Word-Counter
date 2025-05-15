@@ -1,21 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paragraph Counter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paragraph Counter Tool | Count Paragraphs in Text</title>
+    <meta name="description" content="Count the number of paragraphs in your text quickly with our free online paragraph counter tool." />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    
+    <link rel="canonical" href="https://www.text-tool-kit.com/paragraph-counter" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Paragraph Counter Tool | Count Paragraphs in Text" />
+    <meta property="og:description" content="Count the number of paragraphs in your text quickly with our free online paragraph counter tool." />
+    <meta property="og:url" content="https://www.text-tool-kit.com/paragraph-counter" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Paragraph Counter Tool",
+      "url": "https://www.text-tool-kit.com/paragraph-counter",
+      "description": "Free online paragraph counter tool to quickly count paragraphs in essays, articles, or any text.",
+      "applicationCategory": "Utility",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "Text Tool Kit"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Paragraph Counter Tool</h1>
+        <h1>Paragraph Counter</h1>
 
         <form method="POST">
             <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
             <button type="submit">Count Paragraphs</button>
         </form>
 
-        {% if paragraph_count %}
+        {% if paragraph_count is not none and text %}
         <div class="tool-result">
             <h2>Results:</h2>
             <p><strong>Paragraph Count:</strong> {{ paragraph_count }}</p>
@@ -23,6 +51,9 @@
         {% endif %}
 
         <a href="/" class="return-home">Return to Home</a>
+        <p class="tool-description">
+            Quickly count the number of paragraphs in your text using this free paragraph counter tool, ideal for writers and students.
+        </p>
     </div>
 </body>
 </html>
