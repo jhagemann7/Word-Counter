@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://www.text-tool-kit.com/</loc>
+    <loc>https://text-tool-kit.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Word Counter Tool -->
   <url>
-    <loc>https://www.text-tool-kit.com/word-counter</loc>
+    <loc>https://text-tool-kit.com/word-counter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Keyword Density Calculator -->
   <url>
-    <loc>https://www.text-tool-kit.com/keyword-density</loc>
+    <loc>https://text-tool-kit.com/keyword-density</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Sentence Case Converter -->
   <url>
-    <loc>https://www.text-tool-kit.com/sentence-case</loc>
+    <loc>https://text-tool-kit.com/sentence-case</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Paragraph Counter -->
   <url>
-    <loc>https://www.text-tool-kit.com/paragraph-counter</loc>
+    <loc>https://text-tool-kit.com/paragraph-counter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
