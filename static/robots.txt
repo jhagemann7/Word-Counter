@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.text-tool-kit.com/sitemap.xml
+Sitemap: https://text-tool-kit.com/sitemap.xml
