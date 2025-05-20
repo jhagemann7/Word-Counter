@@ -33,10 +33,63 @@
       }
     }
     </script>
+
+    <style>
+      .intro-faq {
+        background: #f0f8ff;
+        border-radius: 8px;
+        padding: 20px 25px;
+        margin-top: 30px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #34495e;
+      }
+
+      .intro-faq .intro p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 5px;
+      }
+
+      .intro-faq .faq-item {
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq-item h3 {
+        font-size: 1.2rem;
+        color: #4caf50;
+        margin-bottom: 5px;
+      }
+
+      .intro-faq .faq-item p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .top-intro {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        margin-bottom: 25px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Paragraph Counter</h1>
+        
+        <div class="top-intro">
+          Quickly count the number of paragraphs in your text using this free paragraph counter tool, ideal for writers and students.
+        </div>
 
         <form method="POST">
             <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
@@ -50,10 +103,49 @@
         </div>
         {% endif %}
 
+        <div class="intro-faq">
+          <section class="intro">
+            <h2>How Does Our Paragraph Counter Work?</h2>
+            <p>
+              Simply paste or type your text into the box above and click the "Count Paragraphs" button. Our tool analyzes your text by detecting line breaks and blank lines to calculate the total number of paragraphs accurately and instantly.
+            </p>
+            <p>
+              It’s perfect for essays, articles, blog posts, and any other writing where you need to know how many paragraphs you have.
+            </p>
+          </section>
+
+          <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+              <h3>How to count paragraphs in text?</h3>
+              <p>To count paragraphs in text, you can look for line breaks or blank lines that separate blocks of text. Typically, each paragraph starts on a new line or after a blank space. This manual method is how many writers count paragraphs without any tool.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>What is a paragraph?</h3>
+              <p>A paragraph is a group of related sentences that focus on a single main idea or topic. Paragraphs help organize writing clearly, making it easier to read and understand. They usually begin on a new line and can vary in length depending on the content.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Do you store my text or other data?</h3>
+              <p>No, we do not store or save any of the text you paste into this paragraph counter. All paragraph counting happens locally in your web browser, so your data remains private and secure.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Can this paragraph counter tool be used for essays, articles, or blog posts?</h3>
+              <p>Yes! This free paragraph counter tool works perfectly for essays, articles, blog posts, and any other type of text where you want to quickly count paragraphs.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Why is it important to count paragraphs in writing?</h3>
+              <p>Counting paragraphs helps with structuring your writing, meeting assignment guidelines, and improving the overall readability and flow of your content. It’s an essential step for students, bloggers, and professional writers alike.</p>
+            </div>
+
+          </section>
+        </div>
+
         <a href="/" class="return-home">Return to Home</a>
-        <p class="tool-description">
-            Quickly count the number of paragraphs in your text using this free paragraph counter tool, ideal for writers and students.
-        </p>
     </div>
 </body>
 </html>
