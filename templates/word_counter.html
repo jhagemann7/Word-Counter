@@ -33,10 +33,63 @@
       }
     }
     </script>
+
+    <style>
+      .intro-faq {
+        background: #f0f8ff;
+        border-radius: 8px;
+        padding: 20px 25px;
+        margin-top: 30px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #34495e;
+      }
+
+      .intro-faq .intro p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 5px;
+      }
+
+      .intro-faq .faq-item {
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq-item h3 {
+        font-size: 1.2rem;
+        color: #4caf50;
+        margin-bottom: 5px;
+      }
+
+      .intro-faq .faq-item p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .top-intro {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        margin-bottom: 25px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Word Counter</h1>
+
+        <div class="top-intro">
+          Use this free word counter tool to quickly count words, characters, and get an estimate of reading time for any text.
+        </div>
 
         <form method="POST">
             <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
@@ -52,13 +105,46 @@
         </div>
         {% endif %}
 
+        <div class="intro-faq">
+          <section class="intro">
+            <h2>How Does Our Word Counter Work?</h2>
+            <p>
+              To use our free word counter tool, simply paste your text into the input box above and click the "Count Words" button. The tool will instantly display the total number of words, characters, and an estimated reading time based on average reading speed. It's fast, accurate, and perfect for students, writers, bloggers, and content creators.
+            </p>
+          </section>
 
+          <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+              <h3>How do I count words in a text document online?</h3>
+              <p>To count words in a text document online, copy your content and paste it into our free word counter tool above. Click the "Count Words" button to instantly get the total number of words, characters, and an estimated reading time.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>What counts as a word in this word counter tool?</h3>
+              <p>A word is any sequence of characters separated by a space or punctuation. Our tool accurately counts each word, whether it's a number, symbol, or standard text, following common word counting guidelines used in essays, articles, and reports.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Can I check the character count and reading time too?</h3>
+              <p>Yes! This word counter tool not only counts words but also provides a total character count and an estimated reading time based on the number of words in your text, making it a versatile tool for writers, students, and professionals.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Is this word counter suitable for essays, blog posts, and articles?</h3>
+              <p>Absolutely. Our word counter is perfect for essays, blog posts, articles, and any type of text where you need to track word count, character count, and reading time. It’s an ideal tool for writers aiming to meet word count limits or improve content readability.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Do you store any text I enter into this word counter?</h3>
+              <p>No, your text is never stored or shared. All word, character, and reading time calculations happen locally in your web browser, ensuring your content remains private and secure.</p>
+            </div>
+
+          </section>
+        </div>
 
         <a href="/" class="return-home">Return to Home</a>
-
-         <p class="tool-description">
-            Use this free word counter tool to quickly count words, characters, and get an estimate of reading time for any text.
-        </p>
     </div>
 </body>
 </html>

@@ -6,18 +6,18 @@
     <title>Sentence Case Converter | Format Your Text Properly</title>
     <meta name="description" content="Convert your text to proper sentence case with our free online tool. Format paragraphs and sentences easily." />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    
+
     <link rel="canonical" href="https://text-tool-kit.com/sentence-case" />
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Sentence Case Converter | Format Your Text Properly" />
     <meta property="og:description" content="Convert your text to proper sentence case with our free online tool. Format paragraphs and sentences easily." />
     <meta property="og:url" content="https://text-tool-kit.com/sentence-case" />
     <meta property="og:type" content="website" />
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -33,10 +33,63 @@
       }
     }
     </script>
+
+    <style>
+      .intro-faq {
+        background: #f0f8ff;
+        border-radius: 8px;
+        padding: 20px 25px;
+        margin-top: 30px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #34495e;
+      }
+
+      .intro-faq .intro p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 5px;
+      }
+
+      .intro-faq .faq-item {
+        margin-bottom: 20px;
+      }
+
+      .intro-faq .faq-item h3 {
+        font-size: 1.2rem;
+        color: #4caf50;
+        margin-bottom: 5px;
+      }
+
+      .intro-faq .faq-item p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .top-intro {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        margin-bottom: 25px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Sentence Case Converter</h1>
+
+        <div class="top-intro">
+          Use this tool to convert your text into proper sentence case, ensuring the first letter of each sentence is capitalized for better readability.
+        </div>
 
         <form method="POST">
             <textarea name="text" placeholder="Paste your text here..." rows="10">{{ text }}</textarea>
@@ -50,10 +103,46 @@
         </div>
         {% endif %}
 
+        <div class="intro-faq">
+          <section class="intro">
+            <h2>How Does Our Sentence Case Converter Work?</h2>
+            <p>
+              Simply paste your text into the box above and click the "Convert Text" button. The tool will instantly reformat your text so the first letter of every sentence is capitalized, while the rest remains in lowercase — perfect for cleaning up improperly formatted paragraphs or correcting all-caps content.
+            </p>
+          </section>
+
+          <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+              <h3>What is sentence case formatting?</h3>
+              <p>Sentence case formatting capitalizes the first letter of each sentence while keeping the rest of the text in lowercase. It's the standard style used in most formal and online writing for readability and clarity.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>How do I convert text to sentence case online?</h3>
+              <p>To convert text to sentence case, paste your content into the input box above and click "Convert Text." The tool will instantly format your text so that each sentence starts with a capital letter.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Can this tool handle paragraphs and multiple sentences?</h3>
+              <p>Yes! Our Sentence Case Converter works for single sentences, full paragraphs, or entire articles. It detects sentence boundaries and applies proper capitalization automatically.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Will this tool remove existing capital letters in names or titles?</h3>
+              <p>No — the tool converts everything to lowercase except for the first letter of each sentence. You may need to manually adjust proper nouns, acronyms, or specific brand names afterward for accuracy.</p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Is this Sentence Case Converter free to use?</h3>
+              <p>Yes! This online sentence case converter is completely free, with no limits or sign-ups required. Use it as often as you like to clean up and format your text.</p>
+            </div>
+
+          </section>
+        </div>
+
         <a href="/" class="return-home">Return to Home</a>
-         <p class="tool-description">
-            Use this tool to convert your text into proper sentence case, ensuring the first letter of each sentence is capitalized for better readability.
-        </p>
     </div>
 </body>
 </html>
