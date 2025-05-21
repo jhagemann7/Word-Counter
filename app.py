@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request, send_from_directory
 import re
+import requests
 
 app = Flask(__name__)
+
+# Contentful config
+SPACE_ID = "w1ok1fl3qefd"
+ACCESS_TOKEN = "itrDNF-PCpzF1IJaLem_V5B9olesdt_HZKgRIFERxas"
 
 # Calculate estimated reading time based on average speed (200 wpm)
 def calculate_reading_time(word_count):
@@ -110,14 +115,26 @@ def paragraph_counter():
 def sitemap():
     return send_from_directory(app.static_folder, "sitemap.xml")
 
-from flask import send_from_directory
-
+# Robots.txt route
 @app.route("/robots.txt")
 def robots_txt():
     return send_from_directory(app.static_folder, "robots.txt")
 
+# Blog route to fetch Contentful entries
+@app.route("/blog")
+def blog():
+    url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    params = {"content_type": "pageBlogPost"}  # Check your Contentful content model ID
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        entries = response.json().get("items", [])
+    else:
+        entries = []
+
+    return render_template("blog.html", entries=entries)
 
 # Run the app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog | Word Counter Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta name="description" content="Explore blog posts about writing, SEO tips, content creation, and productivity for students and creators.">
+</head>
+<body>
+
+<div class="container">
+    <h1>Our Blog</h1>
+    <p>Tips, tricks, and insights about writing, SEO, productivity, and more.</p>
+
+    {% if entries %}
+        {% for post in entries %}
+            <div class="tool-section">
+                <h2>{{ post.title }}</h2>
+                <p><em>Published: {{ post.date }}</em></p>
+                {% if post.image_url %}
+                    <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
+                {% endif %}
+                <p>{{ post.description }}</p>
+                <a href="{{ post.url }}" class="btn">Read More</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No blog posts found. Check back soon!</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
