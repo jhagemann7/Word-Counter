@@ -12,21 +12,17 @@
     <h1>Our Blog</h1>
     <p>Tips, tricks, and insights about writing, SEO, productivity, and more.</p>
 
-    {% if entries %}
-        {% for post in entries %}
-            <div class="tool-section">
-                <h2>{{ post.title }}</h2>
-                <p><em>Published: {{ post.date }}</em></p>
-                {% if post.image_url %}
-                    <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
-                {% endif %}
-                <p>{{ post.description }}</p>
-                <a href="{{ post.url }}" class="btn">Read More</a>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No blog posts found. Check back soon!</p>
-    {% endif %}
+   {% for post in entries %}
+    <div class="tool-section">
+        <h2>{{ post.title }}</h2>
+        <p><em>Published: {{ post.date }}</em></p>
+        {% if post.image_url %}
+            <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
+        {% endif %}
+        <p>{{ post.subtitle }}</p>
+        <a href="{{ post.url }}" class="btn">Read More</a>
+    </div>
+{% endfor %}
 
 </div>
 

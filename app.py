@@ -127,40 +127,43 @@ def blog():
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
     params = {
         "content_type": "pageBlogPost",  # confirm your API ID here!
-        "order": "-sys.createdAt"
+        "order": "-sys.createdAt",
+        "include": 2  # include linked entries and assets (increase if needed)
     }
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
-        entries_data = response.json()
-        items = entries_data.get("items", [])
-        includes = entries_data.get("includes", {})
+        data = response.json()
+        items = data.get("items", [])
+        includes = data.get("includes", {})
 
         entries = []
         for item in items:
             fields = item.get("fields", {})
-            title = fields.get("title")
-            slug = fields.get("slug")
-            date = item["sys"]["createdAt"]
-            description = fields.get("metaDescription")
-            image_url = None  # default
+            title = fields.get("title") or fields.get("entryTitle") or "No title"
+            slug = fields.get("slug") or ""
+            published_date = fields.get("publishedDate") or item["sys"]["createdAt"]
+            subtitle = fields.get("subtitle") or ""
 
-            # If your blog post includes an image asset, you need to resolve it
-            if "image" in fields:
-                image_id = fields["image"]["sys"]["id"]
-                asset = next((asset for asset in includes.get("Asset", []) if asset["sys"]["id"] == image_id), None)
+            # Resolve featured image asset
+            image_url = None
+            if "featuredImage" in fields:
+                image_id = fields["featuredImage"]["sys"]["id"]
+                asset = next((a for a in includes.get("Asset", []) if a["sys"]["id"] == image_id), None)
                 if asset:
                     image_url = asset["fields"]["file"]["url"]
 
-            url_path = f"/blog/{slug}"  # or your actual blog URL path logic
+            # Optional: Get description from SEO fields reference (if you want)
+            subtitle = fields.get("subtitle") or ""
 
             entries.append({
-                "title": title,
-                "date": date,
-                "description": description,
-                "image_url": image_url,
-                "url": url_path
-            })
+    "title": title,
+    "date": published_date,
+    "subtitle": subtitle,
+    "image_url": image_url,
+    "url": url_path
+})
+
     else:
         entries = []
 
