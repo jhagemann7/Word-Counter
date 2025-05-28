@@ -116,17 +116,12 @@ def sitemap():
     return send_from_directory(app.static_folder, "sitemap.xml")
 
 # Robots.txt route
-@app.route("/robots.txt")
-def robots_txt():
-    return send_from_directory(app.static_folder, "robots.txt")
-
-# Blog route to fetch Contentful entries
 @app.route("/blog")
 def blog():
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
     params = {
-        "content_type": "pageBlogPost",  # confirm your API ID here!
+        "content_type": "pageBlogPost",
         "order": "-sys.createdAt",
         "include": 2
     }
@@ -139,7 +134,6 @@ def blog():
         includes = data.get("includes", {})
 
         entries = []
-
         for item in items:
             fields = item.get("fields", {})
             title = fields.get("title") or fields.get("entryTitle") or "No title"
@@ -155,8 +149,8 @@ def blog():
                 if asset:
                     image_url = asset["fields"]["file"]["url"]
 
-            # Create URL path safely here
-            url_path = f"/blog/{slug}"
+            # Build blog post URL using the slug
+            url_path = f"/blog/{slug}" if slug else "#"
 
             entries.append({
                 "title": title,
@@ -165,11 +159,11 @@ def blog():
                 "image_url": image_url,
                 "url": url_path
             })
-
     else:
         entries = []
 
-   return render_template("blog.html", entries=entries)
+    return render_template("blog.html", entries=entries)
+
 
 
 # Run the app
