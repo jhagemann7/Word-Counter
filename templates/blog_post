@@ -13,7 +13,7 @@
   <h2>{{ post.subtitle }}</h2>
 
   <div>
-    {{ post.bodyText | safe }}
+  {{ rich_text_content | safe }}
   </div>
 
   <p><a href="/blog">← Back to Blog</a></p>

@@ -110,6 +110,25 @@ def paragraph_counter():
 
     return render_template("paragraph_counter.html", text=text, paragraph_count=paragraph_count)
 
+# 📝 Contentful Rich Text Renderer
+def render_rich_text(content):
+    html = ""
+
+    for block in content.get("content", []):
+        if block["nodeType"] == "paragraph":
+            paragraph_text = "".join(
+                [node["value"] for node in block.get("content", []) if node["nodeType"] == "text"]
+            )
+            html += f"<p>{paragraph_text}</p>"
+        elif block["nodeType"] == "heading-1":
+            heading_text = "".join(
+                [node["value"] for node in block.get("content", []) if node["nodeType"] == "text"]
+            )
+            html += f"<h1>{heading_text}</h1>"
+        # Add more node types as needed
+
+    return html
+
 # Sitemap route
 @app.route("/sitemap.xml")
 def sitemap():
@@ -178,7 +197,7 @@ def blog():
                            landing=landing_page.get("fields") if landing_page else {},
                            hero_image_url=hero_image_url,
                            posts=entries)
-                           
+
 @app.route("/blog/post/<slug>")
 def blog_post(slug):
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
@@ -203,9 +222,13 @@ def blog_post(slug):
         if asset:
             image_url = asset["fields"]["file"]["url"]
 
+    # 🎉 Render rich text content
+    rich_text_content = render_rich_text(post["fields"]["body"])
+
     return render_template("blog_post.html",
                            post=post["fields"],
-                           image_url=image_url)
+                           image_url=image_url,
+                           rich_text_content=rich_text_content)
 
 # Run the app
 if __name__ == "__main__":
