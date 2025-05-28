@@ -125,11 +125,42 @@ def robots_txt():
 def blog():
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-    params = {"content_type": "pageBlogPost"}  # Check your Contentful content model ID
+    params = {
+        "content_type": "pageBlogPost",  # confirm your API ID here!
+        "order": "-sys.createdAt"
+    }
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
-        entries = response.json().get("items", [])
+        entries_data = response.json()
+        items = entries_data.get("items", [])
+        includes = entries_data.get("includes", {})
+
+        entries = []
+        for item in items:
+            fields = item.get("fields", {})
+            title = fields.get("title")
+            slug = fields.get("slug")
+            date = item["sys"]["createdAt"]
+            description = fields.get("metaDescription")
+            image_url = None  # default
+
+            # If your blog post includes an image asset, you need to resolve it
+            if "image" in fields:
+                image_id = fields["image"]["sys"]["id"]
+                asset = next((asset for asset in includes.get("Asset", []) if asset["sys"]["id"] == image_id), None)
+                if asset:
+                    image_url = asset["fields"]["file"]["url"]
+
+            url_path = f"/blog/{slug}"  # or your actual blog URL path logic
+
+            entries.append({
+                "title": title,
+                "date": date,
+                "description": description,
+                "image_url": image_url,
+                "url": url_path
+            })
     else:
         entries = []
 
