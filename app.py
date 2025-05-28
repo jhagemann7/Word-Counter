@@ -169,7 +169,7 @@ def blog():
     else:
         entries = []
 
-    return render_template("blog.html", entri_
+   return render_template("blog.html", entries=entries)
 
 
 # Run the app
