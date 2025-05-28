@@ -128,8 +128,9 @@ def blog():
     params = {
         "content_type": "pageBlogPost",  # confirm your API ID here!
         "order": "-sys.createdAt",
-        "include": 2  # include linked entries and assets (increase if needed)
+        "include": 2
     }
+
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
@@ -138,6 +139,7 @@ def blog():
         includes = data.get("includes", {})
 
         entries = []
+
         for item in items:
             fields = item.get("fields", {})
             title = fields.get("title") or fields.get("entryTitle") or "No title"
@@ -153,21 +155,22 @@ def blog():
                 if asset:
                     image_url = asset["fields"]["file"]["url"]
 
-            # Optional: Get description from SEO fields reference (if you want)
-            subtitle = fields.get("subtitle") or ""
+            # Create URL path safely here
+            url_path = f"/blog/{slug}"
 
             entries.append({
-    "title": title,
-    "date": published_date,
-    "subtitle": subtitle,
-    "image_url": image_url,
-    "url": url_path
-})
+                "title": title,
+                "date": published_date,
+                "subtitle": subtitle,
+                "image_url": image_url,
+                "url": url_path
+            })
 
     else:
         entries = []
 
-    return render_template("blog.html", entries=entries)
+    return render_template("blog.html", entri_
+
 
 # Run the app
 if __name__ == "__main__":
