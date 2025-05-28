@@ -120,51 +120,92 @@ def sitemap():
 def blog():
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-    params = {
+
+    # Fetch landing page
+    landing_params = {
+        "content_type": "pageLanding",
+        "limit": 1,
+        "include": 2
+    }
+    landing_response = requests.get(url, headers=headers, params=landing_params)
+    landing_data = landing_response.json() if landing_response.status_code == 200 else {}
+    landing_page = landing_data.get("items", [None])[0]
+    hero_image_url = None
+
+    if landing_page:
+        hero_image_ref = landing_page.get("fields", {}).get("heroImage")
+        if hero_image_ref:
+            image_id = hero_image_ref["sys"]["id"]
+            asset = next((a for a in landing_data.get("includes", {}).get("Asset", []) if a["sys"]["id"] == image_id), None)
+            if asset:
+                hero_image_url = asset["fields"]["file"]["url"]
+
+    # Fetch blog posts
+    posts_params = {
         "content_type": "pageBlogPost",
         "order": "-sys.createdAt",
         "include": 2
     }
+    posts_response = requests.get(url, headers=headers, params=posts_params)
+    posts_data = posts_response.json() if posts_response.status_code == 200 else {}
+    posts_items = posts_data.get("items", [])
+    posts_includes = posts_data.get("includes", {})
 
+    entries = []
+    for item in posts_items:
+        fields = item.get("fields", {})
+        title = fields.get("title", "No title")
+        slug = fields.get("slug", "")
+        published_date = fields.get("publishedDate") or item["sys"]["createdAt"]
+        subtitle = fields.get("subtitle", "")
+
+        image_url = None
+        if "featuredImage" in fields:
+            image_id = fields["featuredImage"]["sys"]["id"]
+            asset = next((a for a in posts_includes.get("Asset", []) if a["sys"]["id"] == image_id), None)
+            if asset:
+                image_url = asset["fields"]["file"]["url"]
+
+        entries.append({
+            "title": title,
+            "date": published_date,
+            "subtitle": subtitle,
+            "image_url": image_url,
+            "url": f"/blog/post/{slug}"
+        })
+
+    return render_template("blog.html",
+                           landing=landing_page.get("fields") if landing_page else {},
+                           hero_image_url=hero_image_url,
+                           posts=entries)
+                           
+@app.route("/blog/post/<slug>")
+def blog_post(slug):
+    url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    params = {
+        "content_type": "pageBlogPost",
+        "fields.slug": slug,
+        "limit": 1,
+        "include": 2
+    }
     response = requests.get(url, headers=headers, params=params)
+    data = response.json() if response.status_code == 200 else {}
+    post = data.get("items", [None])[0]
 
-    if response.status_code == 200:
-        data = response.json()
-        items = data.get("items", [])
-        includes = data.get("includes", {})
+    if not post:
+        return "Post not found", 404
 
-        entries = []
-        for item in items:
-            fields = item.get("fields", {})
-            title = fields.get("title") or fields.get("entryTitle") or "No title"
-            slug = fields.get("slug") or ""
-            published_date = fields.get("publishedDate") or item["sys"]["createdAt"]
-            subtitle = fields.get("subtitle") or ""
+    image_url = None
+    if "featuredImage" in post.get("fields", {}):
+        image_id = post["fields"]["featuredImage"]["sys"]["id"]
+        asset = next((a for a in data.get("includes", {}).get("Asset", []) if a["sys"]["id"] == image_id), None)
+        if asset:
+            image_url = asset["fields"]["file"]["url"]
 
-            # Resolve featured image asset
-            image_url = None
-            if "featuredImage" in fields:
-                image_id = fields["featuredImage"]["sys"]["id"]
-                asset = next((a for a in includes.get("Asset", []) if a["sys"]["id"] == image_id), None)
-                if asset:
-                    image_url = asset["fields"]["file"]["url"]
-
-            # Build blog post URL using the slug
-            url_path = f"/blog/{slug}" if slug else "#"
-
-            entries.append({
-                "title": title,
-                "date": published_date,
-                "subtitle": subtitle,
-                "image_url": image_url,
-                "url": url_path
-            })
-    else:
-        entries = []
-
-    return render_template("blog.html", entries=entries)
-
-
+    return render_template("blog_post.html",
+                           post=post["fields"],
+                           image_url=image_url)
 
 # Run the app
 if __name__ == "__main__":

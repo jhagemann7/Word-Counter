@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ post.title }}</title>
+</head>
+<body>
+  <h1>{{ post.title }}</h1>
+  <p><em>{{ post.publishedDate }}</em></p>
+  {% if image_url %}
+    <img src="{{ image_url }}" alt="{{ post.title }} featured image" style="max-width: 100%;">
+  {% endif %}
+  <h2>{{ post.subtitle }}</h2>
+
+  <div>
+    {{ post.bodyText | safe }}
+  </div>
+
+  <p><a href="/blog">← Back to Blog</a></p>
+</body>
+</html>
