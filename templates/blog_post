@@ -2,18 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>{{ post.title }}</title>
+  
+  <link rel="canonical" href="https://text-tool-kit.com/blog/post/{{ post.slug }}">
+  
+  {% if post.subtitle %}
+  <meta name="description" content="{{ post.subtitle }}">
+  {% else %}
+  <meta name="description" content="Read {{ post.title }} on the Text Tool Kit blog. Get tips on SEO, writing, and text utilities.">
+  {% endif %}
 </head>
+
 <body>
   <h1>{{ post.title }}</h1>
   <p><em>{{ post.publishedDate }}</em></p>
+
   {% if image_url %}
     <img src="{{ image_url }}" alt="{{ post.title }} featured image" style="max-width: 100%;">
   {% endif %}
+
   <h2>{{ post.subtitle }}</h2>
 
   <div>
-  {{ rich_text_content | safe }}
+    {{ rich_text_content | safe }}
   </div>
 
   <p><a href="/blog">← Back to Blog</a></p>

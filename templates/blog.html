@@ -3,17 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ landing.entryTitle }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ landing.entryTitle or "Text Tool Kit Blog" }}</title>
+
+    <link rel="canonical" href="https://text-tool-kit.com/blog/" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <meta name="description" content="{{ landing.metaDescription }}">
+
+    <meta name="description" content="{{ landing.metaDescription or 'Explore the latest blog posts on writing, SEO, and text tools to improve your content.' }}">
 </head>
 
 <body>
 <div class="container">
-    <h1>{{ landing.entryTitle }}</h1>
+    <h1>{{ landing.entryTitle or "Text Tool Kit Blog" }}</h1>
 
     {% if hero_image_url %}
-        <img src="{{ hero_image_url }}" alt="Hero Image" style="max-width: 100%; border-radius: 10px;">
+        <img src="{{ hero_image_url }}" alt="{{ landing.entryTitle or 'Hero Image' }}" style="max-width: 100%; border-radius: 10px;">
     {% endif %}
 
     {% if landing.body %}
@@ -26,7 +31,7 @@
     {% for post in posts %}
         <div class="tool-section">
             <h3>{{ post.title }}</h3>
-            <p><em>Published: {{ post.date }}</em></p>
+            <p><em>Published: {{ post.date[:10] }}</em></p> <!-- Just the date, no time -->
             {% if post.image_url %}
                 <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
             {% endif %}
@@ -36,4 +41,5 @@
     {% endfor %}
 </div>
 </body>
+
 </html>
