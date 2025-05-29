@@ -135,6 +135,11 @@ def sitemap():
     return send_from_directory(app.static_folder, "sitemap.xml")
 
 # Robots.txt route
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory(app.static_folder, "robots.txt")
+
+#Blog Route
 @app.route("/blog")
 def blog():
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
