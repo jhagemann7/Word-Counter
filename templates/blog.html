@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
     <meta name="description" content="{{ landing.metaDescription or 'Explore the latest blog posts on writing, SEO, and text tools to improve your content.' }}">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NKNPSCTZ12');
+  </script>
 </head>
 
 <body>
