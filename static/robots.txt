@@ -1,3 +1,5 @@
 User-agent: *
 Disallow: /static/
 Allow: /static/sitemap.xml
+
+Sitemap: https://text-tool-kit.com/sitemap.xml
