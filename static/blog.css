@@ -1,0 +1,140 @@
+/* blog.css */
+
+.blog-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.blog-logo {
+  width: 60px;   /* small square */
+  height: 60px;
+  object-fit: contain;  /* keep aspect ratio */
+  margin-right: 20px;
+}
+
+.blog-title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: 700;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body.blog-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-page h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.blog-page .hero-image {
+  max-height: 300px; /* or whatever height you prefer */
+  width: 100%;
+  object-fit: contain; /* keep aspect ratio and crop if needed */
+  border-radius: 8px; /* optional, to soften corners */
+}
+
+.blog-page .tool-section {
+  border: 1px solid #ddd;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.blog-page .tool-section:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.blog-page .tool-section h3 {
+  color: #4caf50;
+  margin-top: 0;
+}
+
+.blog-page .tool-section p {
+  color: #555;
+}
+
+.blog-page .btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.blog-page .btn:hover {
+  background-color: #388e3c;
+}
+
+.page-container {
+  max-width: 800px;      /* or whatever max width you want */
+  margin: 0 auto;        /* centers the container horizontally */
+  text-align: center;    /* center text inside this container by default */
+  padding: 20px;         /* optional spacing */
+}
+
+.body-content {
+  text-align: left;      /* override for body content only */
+  margin-top: 1em;
+}
+
+.blog-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.blog-post {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: white;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.blog-post:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.blog-post-image {
+  width: 150px;
+  height: auto;
+  margin: 0 auto 1rem auto;
+  cursor: pointer;
+  border-radius: 4px;
+  display: block;
+}
+
+.blog-post-title {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.blog-post-title a {
+  color: inherit;
+  text-decoration: none;
+}

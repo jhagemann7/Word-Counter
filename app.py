@@ -1,8 +1,61 @@
 from flask import Flask, render_template, request, send_from_directory
 import re
 import requests
+import logging
 
 app = Flask(__name__)
+
+app.debug = True
+app.config['PROPAGATE_EXCEPTIONS'] = True
+
+def render_rich_text(node):
+    if not node:
+        return ""
+
+    content_html = ""
+
+    for content in node.get("content", []):
+        node_type = content.get("nodeType")
+
+        if node_type == "paragraph":
+            inner_html = render_rich_text(content)
+            content_html += f"<p>{inner_html}</p>"
+
+        elif node_type == "heading-1":
+            inner_html = render_rich_text(content)
+            content_html += f"<h1>{inner_html}</h1>"
+
+        elif node_type == "heading-2":
+            inner_html = render_rich_text(content)
+            content_html += f"<h2>{inner_html}</h2>"
+
+        elif node_type == "unordered-list":
+            inner_html = render_rich_text(content)
+            content_html += f"<ul>{inner_html}</ul>"
+
+        elif node_type == "ordered-list":
+            inner_html = render_rich_text(content)
+            content_html += f"<ol>{inner_html}</ol>"
+
+        elif node_type == "list-item":
+            inner_html = render_rich_text(content)
+            content_html += f"<li>{inner_html}</li>"
+
+        elif node_type == "hyperlink":
+            url = content["data"].get("uri", "#")
+            inner_html = render_rich_text(content)
+            content_html += f'<a href="{url}" target="_blank" rel="noopener noreferrer">{inner_html}</a>'
+
+        elif node_type == "text":
+            text_value = content.get("value", "")
+            for mark in content.get("marks", []):
+                if mark["type"] == "bold":
+                    text_value = f"<strong>{text_value}</strong>"
+                elif mark["type"] == "italic":
+                    text_value = f"<em>{text_value}</em>"
+            content_html += text_value
+
+    return content_html
 
 # Contentful config
 SPACE_ID = "w1ok1fl3qefd"
@@ -110,25 +163,6 @@ def paragraph_counter():
 
     return render_template("paragraph_counter.html", text=text, paragraph_count=paragraph_count)
 
-# 📝 Contentful Rich Text Renderer
-def render_rich_text(content):
-    html = ""
-
-    for block in content.get("content", []):
-        if block["nodeType"] == "paragraph":
-            paragraph_text = "".join(
-                [node["value"] for node in block.get("content", []) if node["nodeType"] == "text"]
-            )
-            html += f"<p>{paragraph_text}</p>"
-        elif block["nodeType"] == "heading-1":
-            heading_text = "".join(
-                [node["value"] for node in block.get("content", []) if node["nodeType"] == "text"]
-            )
-            html += f"<h1>{heading_text}</h1>"
-        # Add more node types as needed
-
-    return html
-
 # Sitemap route
 @app.route("/sitemap.xml")
 def sitemap():
@@ -203,37 +237,50 @@ def blog():
                            hero_image_url=hero_image_url,
                            posts=entries)
 
+
 @app.route("/blog/post/<slug>")
 def blog_post(slug):
-    url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
-    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-    params = {
-        "content_type": "pageBlogPost",
-        "fields.slug": slug,
-        "limit": 1,
-        "include": 2
-    }
-    response = requests.get(url, headers=headers, params=params)
-    data = response.json() if response.status_code == 200 else {}
-    post = data.get("items", [None])[0]
+    try:
+        url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
+        headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+        params = {
+            "content_type": "pageBlogPost",
+            "fields.slug": slug,
+            "limit": 1,
+            "include": 2
+        }
+        response = requests.get(url, headers=headers, params=params)
 
-    if not post:
-        return "Post not found", 404
+        if response.status_code != 200:
+            return "Error fetching post data", 500
 
-    image_url = None
-    if "featuredImage" in post.get("fields", {}):
-        image_id = post["fields"]["featuredImage"]["sys"]["id"]
-        asset = next((a for a in data.get("includes", {}).get("Asset", []) if a["sys"]["id"] == image_id), None)
-        if asset:
-            image_url = asset["fields"]["file"]["url"]
+        data = response.json()
+        post = data.get("items", [None])[0]
 
-    # 🎉 Render rich text content
-    rich_text_content = render_rich_text(post["fields"]["body"])
+        if not post:
+            return "Post not found", 404
 
-    return render_template("blog_post.html",
-                           post=post["fields"],
-                           image_url=image_url,
-                           rich_text_content=rich_text_content)
+        image_url = None
+        if "featuredImage" in post.get("fields", {}):
+            image_id = post["fields"]["featuredImage"]["sys"]["id"]
+            asset = next((a for a in data.get("includes", {}).get("Asset", []) if a["sys"]["id"] == image_id), None)
+            if asset:
+                image_url = asset["fields"]["file"]["url"]
+
+        body_content = post["fields"].get("content")
+        print(body_content)
+
+        rich_text_content = render_rich_text(body_content) if body_content else ""
+
+        return render_template("blog_post.html",
+                               post=post["fields"],
+                               image_url=image_url,
+                               rich_text_content=rich_text_content)
+
+    except Exception as e:
+        logging.exception("Error in blog_post route")
+        return "Internal Server Error", 500
+
 
 # Run the app
 if __name__ == "__main__":

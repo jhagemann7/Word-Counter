@@ -9,6 +9,7 @@
 
     <link rel="canonical" href="https://text-tool-kit.com/blog/" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='blog.css') }}">
 
     <meta name="description" content="{{ landing.metaDescription or 'Explore the latest blog posts on writing, SEO, and text tools to improve your content.' }}">
       <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -22,13 +23,14 @@
   </script>
 </head>
 
-<body>
+<body class="blog-page">
 <div class="container">
-    <h1>{{ landing.entryTitle or "Text Tool Kit Blog" }}</h1>
-
-    {% if hero_image_url %}
-        <img src="{{ hero_image_url }}" alt="{{ landing.entryTitle or 'Hero Image' }}" style="max-width: 100%; border-radius: 10px;">
-    {% endif %}
+    <header class="blog-header">
+        {% if hero_image_url %}
+        <img src="{{ hero_image_url }}" alt="{{ landing.entryTitle or 'Logo' }}" class="blog-logo">
+        {% endif %}
+        <h1 class="blog-title">{{ landing.entryTitle or "Text Tool Kit Blog" }}</h1>
+    </header>
 
     {% if landing.body %}
         <div class="landing-body">
@@ -37,18 +39,21 @@
     {% endif %}
 
     <h2>Latest Posts</h2>
-    {% for post in posts %}
-        <div class="tool-section">
-            <h3>{{ post.title }}</h3>
-            <p><em>Published: {{ post.date[:10] }}</em></p> <!-- Just the date, no time -->
-            {% if post.image_url %}
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
-            {% endif %}
-            <p>{{ post.subtitle }}</p>
-            <a href="{{ post.url }}" class="btn">Read More</a>
-        </div>
-    {% endfor %}
+    <div class="blog-posts-grid">
+  {% for post in posts %}
+    <div class="blog-post">
+      <a href="{{ post.url }}">
+        {% if post.image_url %}
+          <img src="{{ post.image_url }}" alt="{{ post.title }} featured image" class="blog-post-image" />
+        {% endif %}
+      </a>
+      <h2 class="blog-post-title">
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </h2>
+    </div>
+  {% endfor %}
 </div>
+
 </body>
 
 </html>
