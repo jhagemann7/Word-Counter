@@ -1,4 +1,3 @@
 User-agent: *
-Disallow:
-
-Sitemap: https://text-tool-kit.com/sitemap.xml
+Disallow: /static/
+Allow: /static/sitemap.xml
