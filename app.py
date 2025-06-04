@@ -174,7 +174,7 @@ def robots():
     return send_from_directory(app.static_folder, "robots.txt")
 
 #Blog Route
-@app.route("/blog")
+@app.route("/blog", strict_slashes=False)
 def blog():
     url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
