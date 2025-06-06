@@ -166,7 +166,48 @@ def paragraph_counter():
 # Sitemap route
 @app.route("/sitemap.xml")
 def sitemap():
-    return send_from_directory(app.static_folder, "sitemap.xml")
+    urlset = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    urlset += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+
+    base_url = "https://text-tool-kit.com"
+
+    # Add static pages
+    static_urls = [
+        "/",
+        "/word-counter",
+        "/keyword-density",
+        "/sentence-case",
+        "/paragraph-counter",
+        "/blog"
+    ]
+
+    for path in static_urls:
+        urlset += f"<url><loc>{base_url}{path}</loc></url>\n"
+
+    # Add blog posts dynamically
+    try:
+        url = f"https://cdn.contentful.com/spaces/{SPACE_ID}/entries"
+        headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+        params = {
+            "content_type": "pageBlogPost",
+            "order": "-sys.createdAt",
+            "limit": 1000  # you can adjust this
+        }
+        response = requests.get(url, headers=headers, params=params)
+        data = response.json()
+        posts = data.get("items", [])
+
+        for post in posts:
+            slug = post.get("fields", {}).get("slug")
+            if slug:
+                urlset += f"<url><loc>{base_url}/blog/post/{slug}</loc></url>\n"
+
+    except Exception as e:
+        print("Error fetching posts for sitemap:", e)
+
+    urlset += "</urlset>"
+
+    return app.response_class(urlset, mimetype="application/xml")
 
 # Robots.txt route
 @app.route("/robots.txt")
